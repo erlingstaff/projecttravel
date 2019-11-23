@@ -15,16 +15,16 @@ func HandlerWeather(w http.ResponseWriter, r *http.Request) {
 	city := ""
 	fs := FinishedStruct{}
 	kelvin := -273.15
-	keys, ok := r.URL.Query()["lon"]
+	keys, ok := r.URL.Query()["lon"] //looking for lon-degs
 	if ok {
 		lon = keys[0]
 	}
-	keys, ok = r.URL.Query()["lat"]
+	keys, ok = r.URL.Query()["lat"] //looking for lat-deg
 	if ok {
 		lat = keys[0]
 	}
 	if lon == "" && lat == "" {
-		keys, ok = r.URL.Query()["city"]
+		keys, ok = r.URL.Query()["city"] //looking for city-tag
 		if ok {
 			city = keys[0]
 		} else {
@@ -32,7 +32,7 @@ func HandlerWeather(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintln(w, "\nPlease use correct path, syntax is /project/v1/places/?city={city_name} || ?lon={lon_coordinate}&lat={lat_coordinate}")
 			return
 		}
-		printed, err := findWeatherCity(city)
+		printed, err := findWeatherCity(city) //finds weather for the city
 		fs.Name = printed.Name
 		fs.Degrees = printed.Main.Kelvin + kelvin
 		fs.WeatherDescription = printed.Weather
@@ -65,7 +65,7 @@ func HandlerWeather(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func findWeatherXY(lon string, lat string) (weatherData, error) {
+func findWeatherXY(lon string, lat string) (weatherData, error) { //takes lon and lat-degs and returns a weatherData object
 	apiConfig, err := loadAPIConfig("APIConfig.json")
 	if err != nil {
 		return weatherData{}, err
@@ -80,14 +80,14 @@ func findWeatherXY(lon string, lat string) (weatherData, error) {
 
 	var d weatherData
 
-	err = json.NewDecoder(resp.Body).Decode(&d)
+	err = json.NewDecoder(resp.Body).Decode(&d) //decoding into d
 	if err != nil {
 		return weatherData{}, err
 	}
 	return d, nil
 }
 
-func findWeatherCity(city string) (weatherData, error) {
+func findWeatherCity(city string) (weatherData, error) { //finds the city and returns a weatherData object
 	apiConfig, err := loadAPIConfig("APIConfig.json")
 	if err != nil {
 		return weatherData{}, err
@@ -109,7 +109,7 @@ func findWeatherCity(city string) (weatherData, error) {
 	return d, nil
 }
 
-func loadAPIConfig(filename string) (apiConfigData, error) {
+func loadAPIConfig(filename string) (apiConfigData, error) { //loads the json file with an API key inside
 	bytes, err := ioutil.ReadFile(filename)
 
 	if err != nil {
@@ -125,6 +125,7 @@ func loadAPIConfig(filename string) (apiConfigData, error) {
 	return c, nil
 }
 
+////////////////////////////////////////////////structs//////////////////////////////////////////
 type weatherData struct {
 	Name string `json:"name"`
 	Main struct {

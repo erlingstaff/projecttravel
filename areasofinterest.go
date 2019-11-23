@@ -14,9 +14,9 @@ import (
 
 //HandlerPOI is the handler from main.go
 func HandlerPOI(w http.ResponseWriter, r *http.Request) {
-	http.Header.Add(w.Header(), "content-type", "application/json")
+	http.Header.Add(w.Header(), "content-type", "application/json") //application/json
 	city := ""
-	keys, ok := r.URL.Query()["city"]
+	keys, ok := r.URL.Query()["city"] //looks for city tag
 	if ok != true {
 		fmt.Fprintln(w, "500 "+http.StatusText(500)) //!!
 		fmt.Fprintln(w, "\nPlease use correct path, syntax is /project/v1/places/?city={city_name}")
@@ -24,7 +24,7 @@ func HandlerPOI(w http.ResponseWriter, r *http.Request) {
 	}
 	city = keys[0]
 	lonlatObj := findCityXY(city, w)
-	llng := fmt.Sprintf("%f", lonlatObj.Results[0].Geometry.Location.Lng)
+	llng := fmt.Sprintf("%f", lonlatObj.Results[0].Geometry.Location.Lng) //finds lat and lon from the lonlatobj returned from findCityXY
 	llat := fmt.Sprintf("%f", lonlatObj.Results[0].Geometry.Location.Lat)
 	xyStr := llat + "," + llng
 	fmt.Println(xyStr)
@@ -64,6 +64,7 @@ func findCityXY(city string, w http.ResponseWriter) lonlat {
 	return d
 }
 
+////////////////structs////////////////
 type poi struct {
 	Results []struct {
 		Name         string `json:"name"`

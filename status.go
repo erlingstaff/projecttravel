@@ -13,7 +13,7 @@ var Seconds int //global value to store starttime of the server in UNIX time
 type diagStruct struct {
 	MapsAPI        int
 	OpenWeatherAPI int
-	Database       int
+	Docker         int
 	Version        string
 	Uptime         int
 }
@@ -47,7 +47,7 @@ func HandlerStatus(w http.ResponseWriter, r *http.Request) {
 	revisedSeconds := int(time.Now().Unix()) - Seconds //getting uptime from unix-parameter
 	ds.MapsAPI = statusCode1                           //setting ds (diagnostics) struct to correct values manually
 	ds.OpenWeatherAPI = statusCode2
-	ds.Database = statusCode2
+	ds.Docker = statusCode2
 	ds.Uptime = revisedSeconds
 	ds.Version = versjon
 	err = json.NewEncoder(w).Encode(ds) //encoding and essentially printing the struct
@@ -56,5 +56,4 @@ func HandlerStatus(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "500"+http.StatusText(500))
 		return
 	}
-
 }
