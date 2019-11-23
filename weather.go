@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-func handlerPOI(w http.ResponseWriter, r *http.Request) {
+//HandlerWeather is the handler from main.go
+func HandlerWeather(w http.ResponseWriter, r *http.Request) {
 	http.Header.Add(w.Header(), "content-type", "application/json")
 	lon := ""
 	lat := ""
@@ -24,7 +25,13 @@ func handlerPOI(w http.ResponseWriter, r *http.Request) {
 	}
 	if lon == "" && lat == "" {
 		keys, ok = r.URL.Query()["city"]
-		city = keys[0]
+		if ok {
+			city = keys[0]
+		} else {
+			fmt.Fprintln(w, "500 "+http.StatusText(500)) //!!
+			fmt.Fprintln(w, "\nPlease use correct path, syntax is /project/v1/places/?city={city_name} || ?lon={lon_coordinate}&lat={lat_coordinate}")
+			return
+		}
 		printed, err := findWeatherCity(city)
 		fs.Name = printed.Name
 		fs.Degrees = printed.Main.Kelvin + kelvin
@@ -138,4 +145,5 @@ type FinishedStruct struct {
 
 type apiConfigData struct {
 	OpenWeatherMapAPIKey string `json:"OpenWeatherMapApiKey"`
+	//GoogleApiKey         string `json:"GoogleApiKey"`
 }
