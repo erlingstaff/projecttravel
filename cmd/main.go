@@ -26,9 +26,9 @@ func main() {
 	}
 	http.HandleFunc("/project/v1/", defaultHandler)
 	http.HandleFunc("/project/v1/weather/", projecttravel.HandlerWeather)
-	//http.HandleFunc("/project/v1/status/", projectTourism.HandlerStatus)
-	//http.HandleFunc("/project/v1/travel/", projectTourism.HandlerTravel)
-	//http.HandleFunc("/project/v1/places/", projectTourism.HandlerPOI)
+	//http.HandleFunc("/project/v1/status/", projecttravel.HandlerStatus)
+	//http.HandleFunc("/project/v1/travel/", projecttravel.HandlerTravel)
+	http.HandleFunc("/project/v1/places/", projecttravel.handlerPOI)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 
 }

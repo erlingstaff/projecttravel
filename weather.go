@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func HandlerWeather(w http.ResponseWriter, r *http.Request) {
+func handlerPOI(w http.ResponseWriter, r *http.Request) {
 	http.Header.Add(w.Header(), "content-type", "application/json")
 	lon := ""
 	lat := ""
