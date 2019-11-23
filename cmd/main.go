@@ -25,11 +25,10 @@ func main() {
 	serverstart := int(time.Now().Unix()) //logging unix time of server start as
 	//a global variable, used as parameter above
 	projecttravel.Seconds = serverstart
-	port := "5645"
+	port := "5632"
 	http.HandleFunc("/project/v1/", defaultHandler)
 	http.HandleFunc("/project/v1/weather/", projecttravel.HandlerWeather)
 	http.HandleFunc("/project/v1/status/", projecttravel.HandlerStatus)
-	//http.HandleFunc("/project/v1/travel/", projecttravel.HandlerTravel)
 	http.HandleFunc("/project/v1/places/", projecttravel.HandlerPOI)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 
