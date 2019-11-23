@@ -15,3 +15,15 @@ Hard aspects: It was very hard thinking of a good original plan, in the end  I a
 Learned: In-depth API-usage, .json file parsing, docker-images
 
 Total work time: ~30hours (One person project)
+
+Endpoints:
+
+/project/v1/weather?{city=CITY_NAME} 
+
+or, it is possible to ask for the weather by passing coordinates, like this
+
+/project/v1/weather?{lon=LONGITUDE&lat=LATITUDE} 
+
+/project/v1/places?city=CITY_NAME
+
+/project/v1/status/
