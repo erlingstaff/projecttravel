@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"projecttravel"
 	"time"
 )
@@ -26,10 +25,7 @@ func main() {
 	serverstart := int(time.Now().Unix()) //logging unix time of server start as
 	//a global variable, used as parameter above
 	projecttravel.Seconds = serverstart
-	port := "7979"
-	if os.Getenv("PORT") != "" {
-		port = os.Getenv("PORT")
-	}
+	port := "5645"
 	http.HandleFunc("/project/v1/", defaultHandler)
 	http.HandleFunc("/project/v1/weather/", projecttravel.HandlerWeather)
 	http.HandleFunc("/project/v1/status/", projecttravel.HandlerStatus)
